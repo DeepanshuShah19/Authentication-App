@@ -16,7 +16,8 @@ const LoginPage = () => {
             [name]: value
         })
     }
-    signIn = async () => {
+
+    const signIn = async () => {
         console.log("in signIn");
         const user = await getLoginCredentials(this.state.emailId,this.state.password);
         console.log("user details: ",user);
