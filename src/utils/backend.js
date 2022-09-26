@@ -1,6 +1,7 @@
-const API_URL = 'https://q2rflke9u2.execute-api.us-east-2.amazonaws.com/default/'
+const API_URL = 'https://2xqdp2wveg.execute-api.us-east-2.amazonaws.com/default/'
 
 export const getLoginCredentials = async(emailId,password) => {
+    console.log("in getoginCreds")
     const requestBody = {
         'operationName': 'getLoginCred',
         'payload': {
@@ -58,9 +59,7 @@ export const addNewUser = async(emailId,password,name,username) => {
         let response = await fetch(API_URL, options);
         let json = await response.json();
         console.log('Regestered new user', json);
-        if(json.statusCode === 200 || json.statusCode === 400) {
             return json;
-        }
     } catch(err) {
         console.error('Error while regestring new user.', err);
     }

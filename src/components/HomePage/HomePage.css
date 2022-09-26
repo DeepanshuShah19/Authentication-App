@@ -1,16 +1,26 @@
 .HomePage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content:center;
-    width: 50vw;
-    height: 50vh;
+    width: 600px;
+    background: #789f9e;
+    position: center;
+    border: 1px solid #050101;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
     border-radius: 20px;
-    box-shadow: 0 0 15px 5px grey;
-    background: white;
-    position: relative
+    padding: 20rem;
+    align-items: center ;
+    text-align: center;
+    margin : auto;
 }
 
+.HomePage > input {
+    border-radius: 8px;
+    border: 2px solid #dddfe2;
+    outline: none;
+    color: #1d2129;
+    margin: 0.5rem 0;
+    padding: 0.5rem 0.75rem;
+    width: 92%;
+    font-size: 1rem;
+}
 .HomePage > .button {
     background: #1877f2;
     border: 1px solid #1877f2;
