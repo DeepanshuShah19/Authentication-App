@@ -1,3 +1,5 @@
+const API_URL = 'https://q2rflke9u2.execute-api.us-east-2.amazonaws.com/default/'
+
 export const getLoginCredentials = async(emailId,password) => {
     const requestBody = {
         'operationName': 'getLoginCred',
@@ -18,7 +20,7 @@ export const getLoginCredentials = async(emailId,password) => {
     };
 
     try {
-        let response = await fetch(api_url, options);
+        let response = await fetch(API_URL, options);
         let json = await response.json();
         console.log('Retrieved login details, ', json);
 
@@ -53,7 +55,7 @@ export const addNewUser = async(emailId,password,name,username) => {
     };
 
     try {
-        let response = await fetch(MARINA_PAYMENTS_GATEWAY_BASEURL, options);
+        let response = await fetch(API_URL, options);
         let json = await response.json();
         console.log('Regestered new user', json);
         if(json.statusCode === 200 || json.statusCode === 400) {

@@ -1,6 +1,7 @@
 import React, {useState} from "react"
 import "./LoginPage.css"
-
+import { getLoginCredentials } from "../../utils/backend"
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
 const LoginPage = () => {
 
@@ -19,7 +20,7 @@ const LoginPage = () => {
 
     const signIn = async () => {
         console.log("in signIn");
-        const user = await getLoginCredentials(this.state.emailId,this.state.password);
+        const user = await getLoginCredentials(user.email,user.password);
         console.log("user details: ",user);
         if (user != null) {
           if (user.password === this.state.password) {
@@ -38,6 +39,16 @@ const LoginPage = () => {
             <div className="button" onClick={signIn}>Login</div>
             <div>or</div>
             <div className="button" >Register</div>
+            <GoogleOAuthProvider clientId="635695181698-78ah1onbv4ncnla7n6o05k9a2faq7e6q.apps.googleusercontent.com">
+                <GoogleLogin
+                    onSuccess={credentialResponse => {
+                        console.log(credentialResponse);
+                    }}
+                    onError={() => {
+                        console.log('Login Failed');
+                    }}
+                />
+            </GoogleOAuthProvider>
         </div>
     )
 }

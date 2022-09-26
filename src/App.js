@@ -55,7 +55,8 @@ function App() {
     }
   return (
     <div className="container">
-            <div className="App">                 
+      <LoginPage />
+            {/* <div className="App">                 
                 {
                     editMode
                         ? <>
@@ -77,8 +78,10 @@ function App() {
                             />
                         </>
                 }            
-            </div>
+                
+            </div> */}
         </div>
+        
   );
 }
 

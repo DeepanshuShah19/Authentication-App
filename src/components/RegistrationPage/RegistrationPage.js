@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import "./RegistrationPage.css"
+import { addNewUser } from "../../utils/backend"
 
 const RegistrationPage = () => {
 
