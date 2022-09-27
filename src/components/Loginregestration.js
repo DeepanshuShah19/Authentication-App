@@ -58,19 +58,29 @@ class LoginRegestration extends Component {
         if (user != null) {
             if (user.password === this.state.password) {
                 console.log("successfully logged in");
-                this.setState({ redirect: true })
+                this.setState({ 
+                    name: user.name,
+                    username: user.username,
+                    redirect: true
+                 })
             } else {
                 console.log("Invalid emailId and password");
             }
         }
     }
     googleSignIn = async () => {
+        this.setState({googleSignUp : true});
         console.log("in signIn");
         const user = await getLoginCredentials(eid, pwd);
         console.log("user details: ", user);
         if (user != null) {
             console.log("Successful")
-            this.setState({ redirect: true })
+            this.setState({ 
+                emailId: eid,
+                name : name,
+                username : uname,
+                redirect: true 
+            })
         }
     }
 
@@ -82,6 +92,7 @@ class LoginRegestration extends Component {
         }
     }
     googleSignUp = async () => {
+        this.setState({googleSignUp: true})
         console.log("in signUp");
         var newUser = await addNewUser(eid, pwd, name, uname)
         if (newUser) {
@@ -93,7 +104,7 @@ class LoginRegestration extends Component {
         const loginSuccess = this.state.loginSuccess;
         return (
             <Grid>
-                 { this.state.redirect ? (<HomePage/>) :
+                 { this.state.redirect ? (<HomePage email={this.state.emailId} name={this.state.name} username={this.state.username}/>) :
                 <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
 
                     <MDBTabs pills justify className='mb-3 flex-row justify-content-between'>
