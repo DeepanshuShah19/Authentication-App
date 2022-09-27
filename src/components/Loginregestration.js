@@ -15,6 +15,8 @@ import { getLoginCredentials, addNewUser } from '../utils/backend'
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import jwt_decode from "jwt-decode";
 import HomePage from './HomePage/HomePage'
+import { Redirect, Navigate } from 'react-router-dom';
+import { Grid} from '@material-ui/core';
 
 var eid;
 var pwd;
@@ -32,7 +34,8 @@ class LoginRegestration extends Component {
             username: '',
             googleRegestration: false,
             googlelogin: false,
-            loginSuccess: false
+            loginSuccess: false,
+            redirect: false,
         };
     }
 
@@ -55,7 +58,7 @@ class LoginRegestration extends Component {
         if (user != null) {
             if (user.password === this.state.password) {
                 console.log("successfully logged in");
-                this.setState({ loginSuccess: true })
+                this.setState({ redirect: true })
             } else {
                 console.log("Invalid emailId and password");
             }
@@ -67,6 +70,7 @@ class LoginRegestration extends Component {
         console.log("user details: ", user);
         if (user != null) {
             console.log("Successful")
+            this.setState({ redirect: true })
         }
     }
 
@@ -88,98 +92,102 @@ class LoginRegestration extends Component {
     render() {
         const loginSuccess = this.state.loginSuccess;
         return (
-            <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
+            <Grid>
+                 { this.state.redirect ? (<HomePage/>) :
+                <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
 
-                <MDBTabs pills justify className='mb-3 flex-row justify-content-between'>
-                    <MDBTabsItem>
-                        <MDBTabsLink onClick={() => this.handleJustifyClick('tab1')} active={this.state.justifyActive === 'tab1'}>
-                            Login
-                        </MDBTabsLink>
-                    </MDBTabsItem>
-                    <MDBTabsItem>
-                        <MDBTabsLink onClick={() => this.handleJustifyClick('tab2')} active={this.state.justifyActive === 'tab2'}>
-                            Register
-                        </MDBTabsLink>
-                    </MDBTabsItem>
-                </MDBTabs>
+                    <MDBTabs pills justify className='mb-3 flex-row justify-content-between'>
+                        <MDBTabsItem>
+                            <MDBTabsLink onClick={() => this.handleJustifyClick('tab1')} active={this.state.justifyActive === 'tab1'}>
+                                Login
+                            </MDBTabsLink>
+                        </MDBTabsItem>
+                        <MDBTabsItem>
+                            <MDBTabsLink onClick={() => this.handleJustifyClick('tab2')} active={this.state.justifyActive === 'tab2'}>
+                                Register
+                            </MDBTabsLink>
+                        </MDBTabsItem>
+                    </MDBTabs>
 
-                <MDBTabsContent>
+                    <MDBTabsContent>
 
-                    <MDBTabsPane show={this.state.justifyActive === 'tab1'}>
+                        <MDBTabsPane show={this.state.justifyActive === 'tab1'}>
 
-                        <MDBInput wrapperClass='mb-4' label='Email address' id='emailId' type='email' onChange={this._handleChange} />
-                        <MDBInput wrapperClass='mb-4' label='Password' id='password' type='password' onChange={this._handleChange} />
+                            <MDBInput wrapperClass='mb-4' label='Email address' id='emailId' type='email' onChange={this._handleChange} />
+                            <MDBInput wrapperClass='mb-4' label='Password' id='password' type='password' onChange={this._handleChange} />
 
 
-                        <MDBBtn className="mb-4 w-100 " onClick={this.signIn}>Sign in</MDBBtn>
-                        <div
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}
-                        >
-                            <GoogleOAuthProvider clientId="635695181698-78ah1onbv4ncnla7n6o05k9a2faq7e6q.apps.googleusercontent.com">
-                                <GoogleLogin
-                                    onSuccess={credentialResponse => {
-                                        console.log("Login Successful");
-                                        console.log(credentialResponse.credential);
-                                        const jwt = jwt_decode(credentialResponse.credential);
-                                        console.log("EmailID: ", jwt)
-                                        eid = jwt.email;
-                                        pwd = 'google';
-                                        this.googleSignIn();
-                                    }}
-                                    onError={() => {
-                                        console.log('Login Failed');
-                                    }}
-                                />
-                            </GoogleOAuthProvider>
-                        </div>
+                            <MDBBtn className="mb-4 w-100 " onClick={this.signIn}>Sign in</MDBBtn>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <GoogleOAuthProvider clientId="635695181698-78ah1onbv4ncnla7n6o05k9a2faq7e6q.apps.googleusercontent.com">
+                                    <GoogleLogin
+                                        onSuccess={credentialResponse => {
+                                            console.log("Login Successful");
+                                            console.log(credentialResponse.credential);
+                                            const jwt = jwt_decode(credentialResponse.credential);
+                                            console.log("EmailID: ", jwt)
+                                            eid = jwt.email;
+                                            pwd = 'google';
+                                            this.googleSignIn();
+                                        }}
+                                        onError={() => {
+                                            console.log('Login Failed');
+                                        }}
+                                    />
+                                </GoogleOAuthProvider>
+                            </div>
 
-                    </MDBTabsPane>
+                        </MDBTabsPane>
 
-                    <MDBTabsPane show={this.state.justifyActive === 'tab2'}>
+                        <MDBTabsPane show={this.state.justifyActive === 'tab2'}>
 
-                        <MDBInput wrapperClass='mb-4' label='Name' id='name' type='text' onChange={this._handleChange} />
-                        <MDBInput wrapperClass='mb-4' label='Username' id='username' type='text' onChange={this._handleChange} />
-                        <MDBInput wrapperClass='mb-4' label='Email' id='emailId' type='email' onChange={this._handleChange} />
-                        <MDBInput wrapperClass='mb-4' label='Password' id='password' type='password' onChange={this._handleChange} />
+                            <MDBInput wrapperClass='mb-4' label='Name' id='name' type='text' onChange={this._handleChange} />
+                            <MDBInput wrapperClass='mb-4' label='Username' id='username' type='text' onChange={this._handleChange} />
+                            <MDBInput wrapperClass='mb-4' label='Email' id='emailId' type='email' onChange={this._handleChange} />
+                            <MDBInput wrapperClass='mb-4' label='Password' id='password' type='password' onChange={this._handleChange} />
 
-                        <MDBBtn className="mb-4 w-100" onClick={this.signUp} >Sign up</MDBBtn>
-                        <div
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}
-                        >
-                            <GoogleOAuthProvider clientId="635695181698-78ah1onbv4ncnla7n6o05k9a2faq7e6q.apps.googleusercontent.com">
-                                <GoogleLogin
-                                    onSuccess={credentialResponse => {
-                                        console.log("Regestration Successful");
-                                        console.log(credentialResponse.credential);
-                                        const jwt = jwt_decode(credentialResponse.credential);
-                                        console.log("EmailID: ", jwt)
-                                        eid = jwt.email;
-                                        pwd = 'google';
-                                        name = jwt.given_name;
-                                        uname = jwt.family_name;
-                                        this.googleSignUp()
-                                    }}
-                                    onError={() => {
-                                        console.log('Login Failed');
-                                    }}
-                                />
-                            </GoogleOAuthProvider>
-                        </div>
-                    </MDBTabsPane>
+                            <MDBBtn className="mb-4 w-100" onClick={this.signUp} >Sign up</MDBBtn>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <GoogleOAuthProvider clientId="635695181698-78ah1onbv4ncnla7n6o05k9a2faq7e6q.apps.googleusercontent.com">
+                                    <GoogleLogin
+                                        onSuccess={credentialResponse => {
+                                            console.log("Regestration Successful");
+                                            console.log(credentialResponse.credential);
+                                            const jwt = jwt_decode(credentialResponse.credential);
+                                            console.log("EmailID: ", jwt)
+                                            eid = jwt.email;
+                                            pwd = 'google';
+                                            name = jwt.given_name;
+                                            uname = jwt.family_name;
+                                            this.googleSignUp()
+                                        }}
+                                        onError={() => {
+                                            console.log('Login Failed');
+                                        }}
+                                    />
+                                </GoogleOAuthProvider>
+                            </div>
+                        </MDBTabsPane>
 
-                </MDBTabsContent>
+                    </MDBTabsContent>
 
-            </MDBContainer>
+                </MDBContainer> }
+            </Grid>
+
         );
-}
+    }
 }
 
 export default LoginRegestration;

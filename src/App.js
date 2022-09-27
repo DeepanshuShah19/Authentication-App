@@ -6,8 +6,8 @@ import userProfile from './components/UserProfile'
 function App() {
   return (
     <div className="container">
-      {/* <LoginRegestration /> */}
-      <HomePage/>
+      <LoginRegestration />
+      {/* <HomePage/> */}
       {/* <userProfile/> */}
     </div>
         
