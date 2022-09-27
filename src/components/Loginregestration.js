@@ -77,8 +77,8 @@ class LoginRegestration extends Component {
             console.log("Successful")
             this.setState({ 
                 emailId: eid,
-                name : name,
-                username : uname,
+                name : user.name,
+                username : user.username,
                 redirect: true 
             })
         }
@@ -136,7 +136,7 @@ class LoginRegestration extends Component {
                                     justifyContent: 'center',
                                 }}
                             >
-                                <GoogleOAuthProvider clientId="635695181698-78ah1onbv4ncnla7n6o05k9a2faq7e6q.apps.googleusercontent.com">
+                                <GoogleOAuthProvider clientId="580386742158-3ag92n68mcoul2qlj02h3fgk0ebra1q4.apps.googleusercontent.com">
                                     <GoogleLogin
                                         onSuccess={credentialResponse => {
                                             console.log("Login Successful");
@@ -171,7 +171,8 @@ class LoginRegestration extends Component {
                                     justifyContent: 'center',
                                 }}
                             >
-                                <GoogleOAuthProvider clientId="635695181698-78ah1onbv4ncnla7n6o05k9a2faq7e6q.apps.googleusercontent.com">
+                                {/* 635695181698-78ah1onbv4ncnla7n6o05k9a2faq7e6q.apps.googleusercontent.com */}
+                                <GoogleOAuthProvider clientId="580386742158-3ag92n68mcoul2qlj02h3fgk0ebra1q4.apps.googleusercontent.com">
                                     <GoogleLogin
                                         onSuccess={credentialResponse => {
                                             console.log("Regestration Successful");
