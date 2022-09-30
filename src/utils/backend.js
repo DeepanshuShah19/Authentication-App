@@ -1,4 +1,4 @@
-const API_URL = 'https://2xqdp2wveg.execute-api.us-east-2.amazonaws.com/default/'
+const API_URL = ''
 
 export const getLoginCredentials = async(emailId,password) => {
     console.log("in getoginCreds")
